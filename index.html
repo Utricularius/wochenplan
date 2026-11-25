@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!--
+  ==========================================================================
+  WOCHENPLAN
+  Version: 1.4.1
+  Datum:   2026-11-25
+
+  Ein Wochenplan für Abendessen und Mittagssalat. Gekocht wird in Runden
+  (zwei Gerichte für mehrere Abende), der Planer achtet auf Abwechslung
+  bei Eiweißquellen, Beilagen, Gemüse und Küchen.
+
+  Änderungslog
+  1.4.1  Seltene Zutaten: Gerichte mit Avocado kommen seltener dran.
+  1.4.0  Genuss zum Wochenende: Pasta, Käseabend und Pizza bekommen am
+         Wochenende Bonuspunkte. Käseabend und Pizza nur samstags (Platz D),
+         ohne Kochen und ohne Reste. Pizza zählt nicht zur Vielfalt.
+  1.3.1  Ei aus den Salat-Toppings entfernt.
+  1.3.0  Favoriten: Stern auf jeder Karte und in der Liste aller Gerichte,
+         Favoriten bekommen Bonuspunkte. Druckansicht: Wochenplan auf
+         einer A4-Seite, als PDF speicherbar. Datenstand 2 mit Migration.
+  1.2.0  Abendgerichte der Vorwoche sind ausgeschlossen (außer gesperrt).
+         Familien ähnlicher Gerichte: höchstens eins pro Woche, gleiche
+         Familie wie in der Vorwoche kostet Punkte.
+  1.1.0  Daten nach euren echten Rezepten: Serbische Bohnen ohne Tomate,
+         Halloumicurry mit Spinat (Blattgrün), Bulgur mit Kichererbsen,
+         Linsenbolo mit Walnüssen, Burritos und weitere Gerichte angepasst.
+  1.0.0  Erste Fassung: Plan für 7 Tage mit zwei Kochrunden und zwei
+         Salatbasen, Regeln für Vielfalt, Tomatenbremse, Blattgrün
+         verteilen, Cooldown über die Vorwochen, Sperren, Tauschen,
+         Neu würfeln, Rückgängig, Wochen-Check mit Begründungen.
+
+  Gerichte ergänzen: im Block DATEN eine Zeile kopieren und anpassen.
+  In Squarespace einbetten: nur den Bereich zwischen EINBETTEN: AB HIER
+  und EINBETTEN: BIS HIER in einen Code-Block kopieren.
+  ==========================================================================
+-->
+<title>Wochenplan</title>
+<meta name="description" content="Wochenplan für Abendessen und Mittagssalat.">
+<meta name="theme-color" content="#f6f4ef" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1b1a18" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-title" content="Wochenplan">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233d5a4a'/%3E%3Ccircle cx='32' cy='34' r='18' fill='none' stroke='%23f6f4ef' stroke-width='4'/%3E%3Ccircle cx='32' cy='34' r='9' fill='%23f6f4ef'/%3E%3Cpath d='M32 6c5 0 9 3 9 8-5 0-9-3-9-8z' fill='%23c9dcc8'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+
+<style>
+  /* NUR STANDALONE: beim Einbetten weglassen. */
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: #f6f4ef; }
+  @media (prefers-color-scheme: dark) { body { background: #1b1a18; } }
+  @media print { body { background: #fff; } }
+</style>
+</head>
+<body>
+
+<!-- ==================== EINBETTEN: AB HIER ==================== -->
+<div id="wpl-app" class="wpl">
+  <noscript>Dieses Werkzeug braucht JavaScript.</noscript>
+</div>
+
+<style>
+  /* Alle Stile hängen an .wpl, damit eine Website und das Tool sich nicht
+     gegenseitig verändern. */
+  .wpl {
+    --bg: #f6f4ef;
+    --surface: #ffffff;
+    --text: #1f1d1a;
+    --muted: #57534c;
+    --line: #d6d0c4;
+    --accent: #3d5a4a;
+    --on-accent: #ffffff;
+    --soft: #e7eee8;
+    --focus: #b0601a;
+    --error: #8a2e2e;
+    --radius: 12px;
+    --tap: 44px;
+    --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+    color-scheme: light dark;
+    box-sizing: border-box;
+    max-width: 40rem;
+    margin: 0 auto;
+    padding: 1.5rem 1rem 6rem;   /* unten Platz für die Statusleiste */
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+    font-family: var(--font);
+    font-size: 1.0625rem;
+    line-height: 1.5;
+    color: var(--text);
+    background: var(--bg);
+  }
+  @media (prefers-color-scheme: dark) {
+    .wpl {
+      --bg: #1b1a18;
+      --surface: #25231f;
+      --text: #ece8e1;
+      --muted: #b5afa5;
+      --line: #3d3a33;
+      --accent: #8fb39e;
+      --on-accent: #12201a;
+      --soft: #2c3a31;
+      --focus: #e0a96d;
+      --error: #eba3a3;
+    }
+  }
+  .wpl *, .wpl *::before, .wpl *::after { box-sizing: inherit; }
+
+  .wpl h1 { font-size: 1.6rem; line-height: 1.2; margin: 0 0 .25rem; font-weight: 650; }
+  .wpl h2 { font-size: 1.15rem; margin: 2rem 0 .75rem; font-weight: 650; }
+  .wpl h3 { font-size: 1rem; margin: 1.25rem 0 .5rem; color: var(--muted); font-weight: 600; }
+  .wpl .wpl-sub { margin: 0 0 1.25rem; color: var(--muted); }
+  .wpl p { margin: 0; }
+
+  .wpl .wpl-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1rem 1.1rem;
+    margin-bottom: .75rem;
+  }
+
+  /* Wochenübersicht */
+  .wpl .wpl-day { display: grid; grid-template-columns: 3.6rem 1fr; gap: .25rem .75rem; padding: .85rem 0; border-top: 1px solid var(--line); }
+  .wpl .wpl-day:first-child { border-top: 0; padding-top: 0; }
+  .wpl .wpl-day:last-child { padding-bottom: 0; }
+  .wpl .wpl-dayname { font-weight: 650; line-height: 1.3; }
+  .wpl .wpl-dayname small { display: block; font-weight: 400; color: var(--muted); font-size: .85rem; }
+  .wpl .wpl-meal { display: flex; gap: .5rem; align-items: baseline; }
+  .wpl .wpl-meal-label { color: var(--muted); font-size: .9rem; min-width: 3.4rem; }
+  .wpl .wpl-hint { font-size: .9rem; color: var(--muted); margin-top: .15rem; }
+  .wpl .wpl-todo { display: inline-block; font-size: .85rem; background: var(--soft); border-radius: 999px; padding: .1rem .6rem; margin-top: .3rem; }
+
+  .wpl .wpl-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 1.6rem; height: 1.6rem; flex: none;
+    border-radius: 50%; background: var(--accent); color: var(--on-accent);
+    font-size: .85rem; font-weight: 700;
+  }
+  .wpl .wpl-badge.is-salad { background: var(--soft); color: var(--text); }
+
+  /* Gerichtkarten */
+  .wpl .wpl-dish-head { display: flex; gap: .6rem; align-items: center; }
+  .wpl .wpl-dish-name { font-size: 1.15rem; font-weight: 650; line-height: 1.3; }
+  .wpl .wpl-keys { color: var(--muted); font-size: .95rem; margin-top: .35rem; }
+  .wpl .wpl-reason { margin-top: .5rem; font-size: .95rem; }
+  .wpl .wpl-actions { display: flex; gap: .5rem; margin-top: .8rem; }
+
+  .wpl button {
+    font: inherit;
+    font-size: 1rem;
+    min-height: var(--tap);
+    min-width: var(--tap);
+    padding: .55rem 1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .wpl button:hover { border-color: var(--muted); }
+  .wpl button:disabled { opacity: .45; cursor: default; }
+  .wpl button.wpl-primary {
+    width: 100%;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--on-accent);
+  }
+  .wpl button[aria-pressed="true"] { background: var(--soft); border-color: var(--accent); font-weight: 600; }
+  .wpl button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .wpl .wpl-small { font-size: .9rem; color: var(--muted); margin: .5rem 0 0; }
+
+  /* Wochen-Check */
+  .wpl .wpl-check { display: grid; grid-template-columns: 1.4rem 1fr; gap: .1rem .5rem; padding: .5rem 0; border-top: 1px solid var(--line); }
+  .wpl .wpl-check:first-child { border-top: 0; padding-top: 0; }
+  .wpl .wpl-check-mark { font-weight: 700; color: var(--accent); }
+  .wpl .wpl-check-mark.is-open { color: var(--muted); }
+  .wpl .wpl-check-detail { grid-column: 2; font-size: .9rem; color: var(--muted); }
+  .wpl .wpl-warn { color: var(--error); }
+
+  /* Statusleiste unten, damit Rückgängig auch nach Tauschen weit unten sichtbar ist */
+  .wpl .wpl-status {
+    position: fixed; left: 50%; bottom: max(1rem, env(safe-area-inset-bottom));
+    transform: translateX(-50%);
+    width: min(36rem, calc(100% - 2rem));
+    display: none; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem .75rem;
+    padding: .6rem .75rem .6rem 1rem;
+    background: var(--text); color: var(--bg);
+    border-radius: var(--radius);
+    font-size: 1rem;
+    z-index: 10;
+  }
+  .wpl .wpl-status.is-visible { display: flex; }
+  .wpl .wpl-status button { color: var(--bg); border-color: var(--bg); padding: .35rem .9rem; }
+
+  .wpl .wpl-footer { margin-top: 2.5rem; font-size: .9rem; color: var(--muted); }
+
+  /* Liste aller Gerichte */
+  .wpl .wpl-all { margin-top: 2rem; }
+  .wpl .wpl-all summary { min-height: var(--tap); display: flex; align-items: center; font-weight: 650; font-size: 1.15rem; cursor: pointer; }
+  .wpl .wpl-all summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .wpl .wpl-row { display: flex; justify-content: space-between; align-items: center; gap: .75rem; padding: .35rem 0; border-top: 1px solid var(--line); }
+  .wpl .wpl-actions { flex-wrap: wrap; }
+
+  /* Druckansicht: auf dem Bildschirm unsichtbar */
+  .wpl .wpl-print { display: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wpl * { transition: none !important; animation: none !important; }
+  }
+  /* Steht ganz unten, damit es den Dunkelmodus überschreibt: Papier ist immer hell */
+  @page { size: A4; margin: 14mm; }
+  @media print {
+    .wpl {
+      --bg: #fff; --surface: #fff; --text: #000; --muted: #444; --line: #bbb;
+      color-scheme: light; background: #fff; color: #000;
+      max-width: none; padding: 0; font-size: 10.5pt; line-height: 1.35;
+    }
+    .wpl > *:not(.wpl-print) { display: none !important; }
+    .wpl .wpl-print { display: block; }
+    .wpl .wpl-print h1 { font-size: 16pt; margin: 0; }
+    .wpl .wpl-print h2 { font-size: 12pt; margin: 10pt 0 4pt; }
+    .wpl .wpl-print .wpl-sub { margin: 0 0 8pt; }
+    .wpl .wpl-ptable { width: 100%; border-collapse: collapse; }
+    .wpl .wpl-ptable th, .wpl .wpl-ptable td { text-align: left; vertical-align: top; padding: 4pt 5pt; border-bottom: 1px solid var(--line); }
+    .wpl .wpl-ptable th { border-bottom: 1.5px solid #000; }
+    .wpl .wpl-ptable tr { break-inside: avoid; }
+    .wpl .wpl-ptable small, .wpl .wpl-plist small { color: var(--muted); }
+    .wpl .wpl-plist { margin: 0 0 8pt; padding-left: 1.1em; }
+    .wpl .wpl-print .wpl-footer { margin-top: 10pt; font-size: 8.5pt; }
+  }
+</style>
+
+<script>
+(function () {
+  'use strict';
+  /* Alles in einer Funktion: Variablen bleiben privat und kollidieren
+     nicht mit anderem Code auf derselben Seite. */
+
+  /* ======================================================================
+     1. CONFIG
+     Alle Regeln und Schwellenwerte. Tage zählen ab Montag: 0 = Mo, 6 = So.
+     ====================================================================== */
+  const CONFIG = {
+    toolName: 'wochenplan',
+    storageKey: 'tb-wochenplan',
+    schemaVersion: 2,                     // 2: Favoriten dazugekommen
+    lang: 'de',
+    showDisclaimer: true,
+    undoSeconds: 8,
+
+    // Ab diesem Wochentag zeigt das Tool schon die kommende Woche (5 = Samstag)
+    naechsteWocheAbTag: 5,
+
+    // Haushalt und Kochrhythmus
+    personen: 2,
+    portionenProGericht: 4,
+    maxTageNachKochen: 3,                 // so lange darf Gekochtes im Kühlschrank stehen
+    kochrunden: [                         // an welchem Tag welche Gerichte gekocht werden
+      { tag: 0, slots: ['A', 'B'] },
+      { tag: 4, slots: ['C', 'D'] }
+    ],
+    abendMuster: ['A', 'B', 'A', 'B', 'C', 'D', 'C'],
+    salatrunden: [                        // an welchem Tag welche Salatbasis vorbereitet wird
+      { tag: 0, slot: 'M1' },
+      { tag: 3, slot: 'M2' }
+    ],
+    mittagMuster: ['M1', 'M1', 'M1', 'M2', 'M2', 'M2', null],   // null = frei
+    toppingsProTag: 2,
+    // Zutaten, die selten in guter Qualität zu haben sind. Zahl = Abzug pro Gericht.
+    // Funktioniert auch für Saisonware, z. B. 'Spargel': 10
+    selteneZutaten: { 'Avocado': 6 },
+    genussSlots: ['C', 'D'],              // diese Plätze liegen auf dem Wochenende (Fr, Sa, So)
+
+    // Regeln
+    maxTomatensauce: 2,                   // höchstens so viele Gerichte mit Tomatensauce pro Woche
+    blattgruenVerteilen: true,            // nie zwei Mahlzeiten mit viel Blattgrün am selben Tag
+    cooldownStrafe: [8, 4],               // Abzug, wenn ein Gericht vor 1 bzw. 2 Wochen dran war
+    historieWochen: 6,
+    strafeVorherigerWurf: 5,              // beim Neu würfeln lieber andere Gerichte zeigen
+    vorwocheAusschliessen: true,          // Abendgerichte der Vorwoche kommen nicht wieder, außer gesperrt
+    eineProFamilie: true,                 // aus jeder Familie höchstens ein Gericht pro Woche
+
+    // Suche: so viele Zufallswochen werden bewertet. Aus allen, die höchstens
+    // spielraum Punkte unter der besten liegen, wird zufällig gewählt.
+    versuche: 800,
+    spielraum: 3,
+
+    gewichte: {
+      eiweissGruppe: 4,
+      eiweissQuelle: 1,
+      beilage: 3,
+      pflanze: 2,
+      kueche: 2,
+      paarGleichesEiweiss: 12,
+      paarGleicheKueche: 12,
+      paarGleicheBeilage: 3,
+      tomateZuViel: 20,
+      blattgruenGleicherTag: 10,
+      familieVorwoche: 20,                // gleiche Familie wie letzte Woche
+      favorit: 4,                         // Bonus pro Favorit, harte Regeln bleiben stärker
+      genuss: 5                           // Bonus für ein Genuss-Gericht am Wochenende
+    },
+
+    // Ab hier gilt ein Punkt im Wochen-Check als erfüllt
+    ziele: { eiweissGruppen: 3, beilagen: 4, pflanzen: 12, kuechen: 3 },
+
+    // Ordnet jede Eiweißquelle einer Gruppe zu. Neue Quelle = neue Zeile.
+    eiweissGruppen: {
+      'Linsen': 'Hülsenfrüchte',
+      'Bohnen': 'Hülsenfrüchte',
+      'Kichererbsen': 'Hülsenfrüchte',
+      'Erbsen': 'Hülsenfrüchte',
+      'Tofu': 'Soja',
+      'Käse': 'Milchprodukte',
+      'Joghurt': 'Milchprodukte',
+      'Ei': 'Ei',
+      'Walnüsse': 'Nüsse und Saaten',
+      'Tahin': 'Nüsse und Saaten'
+    }
+  };
+
+  /* ======================================================================
+     2. TEXTE
+     ====================================================================== */
+  const TEXTE = {
+    de: {
+      title: 'Wochenplan',
+      weekRange: 'Woche vom {von} bis {bis}',
+      days: ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'],
+      secWeek: 'Die Woche',
+      secDishes: 'Gerichte anpassen',
+      secCheck: 'Vielfalt der Woche',
+      lunch: 'Mittag',
+      dinner: 'Abend',
+      free: 'frei',
+      toppingIdea: 'Topping: {list}',
+      todoCook: 'Kochen: {list}',
+      todoSalad: 'Salat für {n} Tage vorbereiten',
+      roundCook: 'Kochen am {tag}',
+      roundSalad: 'Salat ab {tag}',
+      reroll: 'Neue Woche würfeln',
+      rerollHint: 'Gesperrte Gerichte bleiben stehen.',
+      lock: 'Sperren',
+      locked: 'Gesperrt',
+      swap: 'Tauschen',
+      rest: 'Rest: {n} Portionen zum Einfrieren.',
+      rNew: 'Neu in der Woche: {list}.',
+      rPlants: 'Bringt {list}.',
+      rContrastKitchen: 'Kontrast zu {slot}: {a} statt {b}.',
+      rContrastProtein: 'Kontrast zu {slot}: {a} statt {b}.',
+      rAgo1: 'Letzte Woche schon dran.',
+      rAgo: 'Zuletzt vor {n} Wochen.',
+      rLong: 'Länger nicht dran.',
+      rLocked: 'Gesperrt.',
+      cProtein: 'Eiweißquellen: {n} Gruppen',
+      cSides: 'Beilagen: {n} verschiedene',
+      cPlants: 'Gemüse und Kräuter: {n} Sorten',
+      cKitchen: 'Küchen: {n} verschiedene',
+      cTomato: 'Tomatensauce: {n} von höchstens {max}',
+      cGreen: 'Blattgrün: {list}',
+      cGreenNone: 'Blattgrün: diese Woche keins',
+      cGreenSpread: 'Höchstens eine Mahlzeit pro Tag.',
+      freshWarn: 'Achtung: {name} wird erst am {n}. Tag nach dem Kochen gegessen.',
+      rerolled: 'Neue Woche gewürfelt.',
+      swapped: '{alt} getauscht gegen {neu}.',
+      lockedMsg: '{name} bleibt stehen.',
+      unlockedMsg: '{name} ist wieder frei.',
+      undo: 'Rückgängig',
+      undone: 'Wiederhergestellt.',
+      storageOff: 'Speichern geht hier nicht. Der Plan wird beim Schließen vergessen.',
+      disclaimer: 'Dieses Werkzeug dient der eigenen Alltagsgestaltung und ersetzt keine ärztliche oder ernährungsfachliche Beratung.',
+      fatal: 'Hier ist etwas schiefgelaufen. Bitte lade die Seite neu.',
+      fav: 'Favorit',
+      favOn: '★ Favorit',
+      favMsgOn: '{name} ist jetzt Favorit.',
+      favMsgOff: '{name} ist kein Favorit mehr.',
+      rFav: 'Favorit.',
+      rGenuss: 'Genuss zum Wochenende.',
+      noCook: 'nichts zu kochen',
+      allDishes: 'Alle Gerichte und Favoriten',
+      allDinner: 'Abendessen',
+      allLunch: 'Mittagssalate',
+      print: 'Drucken oder als PDF',
+      printHint: 'Eine A4-Seite. Auf dem iPhone: Drucken, dann Teilen und In Dateien sichern.',
+      pDay: 'Tag',
+      pPrep: 'Vorbereiten',
+      pDishes: 'Gerichte der Woche',
+      pVariety: 'Vielfalt: {g} Eiweißgruppen, {b} Beilagen, {p} Sorten Gemüse und Kräuter, {k} Küchen.',
+      salad: 'Salat {n}'
+    }
+  };
+
+  function t(key, vars) {
+    const dict = TEXTE[CONFIG.lang] || TEXTE.de;
+    let text = dict[key] !== undefined ? dict[key] : (TEXTE.de[key] !== undefined ? TEXTE.de[key] : key);
+    if (vars && typeof text === 'string') {
+      Object.keys(vars).forEach(function (k) { text = text.split('{' + k + '}').join(String(vars[k])); });
+    }
+    return text;
+  }
+
+  /* ======================================================================
+     3. DATEN
+     Jedes Gericht: Eiweißquellen (die erste zählt als Hauptquelle),
+     Beilagen, Gemüse und Kräuter, Küche, Schlüsselzutaten zur Erinnerung.
+     tomatensauce und blattgruen steuern die zwei Sonderregeln.
+     familie (optional) fasst ähnliche Gerichte zusammen, z. B. alle Chilis.
+     genuss: Belohnungsgericht fürs Wochenende. nurSlots: nur auf diesen Plätzen.
+     einAbend: reicht für einen Abend, keine Reste, kein Kochen.
+     zaehltNicht: fließt nicht in die Vielfalt ein (z. B. Bestelltes).
+     Die id nie mehr ändern, gespeicherte Wochen zeigen darauf.
+     ====================================================================== */
+  const DATEN = {
+    abend: [
+      { id: 'auberginenlasagne', name: 'Auberginenlasagne', eiweiss: ['Linsen', 'Käse', 'Ei'], beilage: [], gemuese: ['Aubergine', 'Tomate', 'Paprika'], kueche: 'italienisch', tomatensauce: true, blattgruen: false, zutaten: ['Auberginen', 'rote Linsen', 'Frischkäse', 'Parmesan'] },
+      { id: 'serbische-bohnen', name: 'Serbische Bohnen', eiweiss: ['Bohnen'], beilage: ['Brot'], gemuese: ['Zwiebel'], kueche: 'balkanisch', tomatensauce: false, blattgruen: false, zutaten: ['getrocknete Riesenbohnen (Vorabend einweichen)', 'viele Zwiebeln', 'Paprikapulver', 'Brot'] },
+      { id: 'kohlpfanne-tofu', name: 'Kohlpfanne mit Tofu und Reis', eiweiss: ['Tofu'], beilage: ['Reis'], gemuese: ['Weißkohl', 'Chili'], kueche: 'asiatisch', familie: 'tofupfanne', tomatensauce: false, blattgruen: false, zutaten: ['Weißkohl', 'Tofu', 'Sojasauce', 'Vollkornreis'] },
+      { id: 'halloumicurry', name: 'Halloumicurry mit Hirse', eiweiss: ['Käse'], beilage: ['Hirse'], gemuese: ['Spinat', 'Tomate', 'Ingwer'], kueche: 'indisch', familie: 'curry', tomatensauce: false, blattgruen: true, zutaten: ['Halloumi', 'Hirse', 'Kokosmilch', 'Spinat'] },
+      { id: 'reisnudelpfanne', name: 'Reisnudelpfanne mit Tofu und Avocado', eiweiss: ['Tofu'], beilage: ['Reisnudeln'], gemuese: ['Karotte', 'Avocado', 'Frühlingszwiebel', 'Ingwer'], kueche: 'asiatisch', familie: 'tofupfanne', tomatensauce: false, blattgruen: false, zutaten: ['Reisnudeln', 'Tofu', 'Karotten', 'Avocado, wenn gut zu haben'] },
+      { id: 'pasta-linsenbolo', name: 'Pasta mit Linsenbolo', eiweiss: ['Linsen', 'Walnüsse'], beilage: ['Pasta'], gemuese: ['Tomate'], kueche: 'italienisch', familie: 'tomatenpasta', tomatensauce: true, blattgruen: false, genuss: true, zutaten: ['Vollkornpasta', 'rote Linsen', 'Walnüsse', 'Tomatenmark'] },
+      { id: 'pasta-walnussbolo', name: 'Pasta mit Walnussbolo', eiweiss: ['Walnüsse'], beilage: ['Pasta'], gemuese: ['Champignons', 'Tomate'], kueche: 'italienisch', familie: 'tomatenpasta', tomatensauce: true, blattgruen: false, genuss: true, zutaten: ['Vollkornpasta', 'Walnüsse', 'Champignons', 'gehackte Tomaten'] },
+      { id: 'pasta-arrabiata-halloumi', name: 'Pasta Arrabiata mit Halloumi', eiweiss: ['Käse'], beilage: ['Pasta'], gemuese: ['Tomate', 'Chili', 'Oliven', 'Kapern'], kueche: 'italienisch', familie: 'tomatenpasta', tomatensauce: true, blattgruen: false, genuss: true, zutaten: ['Vollkornpasta', 'Halloumi', 'stückige Tomaten', 'Oliven', 'Kapern'] },
+      { id: 'pasta-champignons', name: 'Pasta mit Champignons', eiweiss: ['Käse'], beilage: ['Pasta'], gemuese: ['Champignons'], kueche: 'italienisch', tomatensauce: false, blattgruen: false, genuss: true, zutaten: ['Vollkornpasta', 'Champignons', 'Knoblauch', 'Parmesan'] },
+      { id: 'blumenkohl-kichererbsen-curry', name: 'Blumenkohl-Kichererbsen-Curry', eiweiss: ['Kichererbsen'], beilage: ['Reis'], gemuese: ['Blumenkohl', 'Tomate', 'Ingwer'], kueche: 'indisch', familie: 'curry', tomatensauce: false, blattgruen: false, zutaten: ['Blumenkohl', 'Kichererbsen', 'Kokosmilch', 'Vollkornreis'] },
+      { id: 'chili-sin-carne', name: 'Chili sin carne', eiweiss: ['Bohnen'], beilage: ['Reis'], gemuese: ['Paprika', 'Tomate', 'Mais'], kueche: 'mexikanisch', familie: 'chili', tomatensauce: true, blattgruen: false, zutaten: ['Kidneybohnen', 'schwarze Bohnen', 'Mais', 'Tomaten'] },
+      { id: 'schwarze-bohnen-chili', name: 'Schwarze-Bohnen-Chili mit Tahinjoghurt', eiweiss: ['Bohnen', 'Tahin'], beilage: ['Reis'], gemuese: ['Tomate', 'Jalapeño', 'Avocado', 'Koriander'], kueche: 'mexikanisch', familie: 'chili', tomatensauce: true, blattgruen: false, zutaten: ['schwarze Bohnen', 'Tahin', 'Avocado, wenn gut zu haben', 'dunkle Schokolade'] },
+      { id: 'bohnenschmulz', name: 'Bohnenschmulz', eiweiss: ['Bohnen', 'Tofu'], beilage: [], gemuese: ['Jalapeño', 'Tomate'], kueche: 'mexikanisch', familie: 'chili', tomatensauce: false, blattgruen: false, zutaten: ['Kidneybohnen', 'schwarze Bohnen', 'Seidentofu', 'Hefeflocken'] },
+      { id: 'burritos', name: 'Burritos mit Salat', eiweiss: ['Bohnen', 'Käse'], beilage: ['Tortilla'], gemuese: ['Paprika', 'Zwiebel'], kueche: 'mexikanisch', familie: 'chili', tomatensauce: false, blattgruen: false, zutaten: ['Vollkorn-Tortillas', '3 Dosen Bohnen', 'Paprika', 'Käse'] },
+      { id: 'indisches-tofu', name: 'Indisches Tofu', eiweiss: ['Tofu'], beilage: ['Reis'], gemuese: ['Tomate', 'Ingwer'], kueche: 'indisch', familie: 'curry', tomatensauce: true, blattgruen: false, zutaten: ['Tofu', 'Tomatensauce', 'Garam Masala', 'Vollkornreis'] },
+      { id: 'feta-ofengemuese', name: 'Feta mit Ofengemüse aus dem Air Fryer', eiweiss: ['Käse'], beilage: [], gemuese: ['Zucchini', 'Tomate', 'Rote Zwiebel'], kueche: 'griechisch', tomatensauce: false, blattgruen: false, zutaten: ['Feta', 'Zucchini', 'Cherrytomaten', 'rote Zwiebel'] },
+      { id: 'bulgur-auberginen', name: 'Bulgur mit Auberginen', eiweiss: ['Kichererbsen'], beilage: ['Bulgur'], gemuese: ['Aubergine', 'Tomate', 'Petersilie'], kueche: 'orientalisch', tomatensauce: false, blattgruen: false, zutaten: ['Vollkornbulgur', 'Auberginen', 'Kichererbsen', 'Tomaten'] },
+      { id: 'kaeseabend', name: 'Käseabend', eiweiss: ['Käse'], beilage: ['Brot'], gemuese: ['Oliven', 'Gurke', 'Paprika', 'Tomate'], kueche: 'mediterran', tomatensauce: false, blattgruen: false, genuss: true, nurSlots: ['D'], einAbend: true, zutaten: ['Käse', 'Brot', 'Oliven', 'Rohkost'] },
+      { id: 'pizza-bestellt', name: 'Pizza (bestellt)', eiweiss: [], beilage: [], gemuese: [], kueche: '', tomatensauce: false, blattgruen: false, genuss: true, nurSlots: ['D'], einAbend: true, zaehltNicht: true, zutaten: ['bestellt'] },
+      { id: 'arakas-latheros', name: 'Arakas Latheros', eiweiss: ['Erbsen'], beilage: ['Kartoffel'], gemuese: ['Karotte', 'Tomate', 'Dill'], kueche: 'griechisch', tomatensauce: true, blattgruen: false, zutaten: ['Erbsen', 'Kartoffeln', 'Karotten', 'Dill'] }
+    ],
+    mittag: [
+      { id: 'rote-bete-buchweizen', name: 'Rote Bete mit Buchweizen', eiweiss: ['Walnüsse'], beilage: ['Buchweizen'], gemuese: ['Rote Bete', 'Rote Zwiebel'], blattgruen: false, zutaten: ['Rote Bete', 'Buchweizen', 'Walnüsse'] },
+      { id: 'linsensalat', name: 'Linsensalat mit Paprika', eiweiss: ['Linsen'], beilage: [], gemuese: ['Paprika', 'Petersilie'], blattgruen: false, zutaten: ['Linsen', 'Paprika', 'Petersilie'] },
+      { id: 'kichererbsensalat', name: 'Kichererbsensalat', eiweiss: ['Kichererbsen'], beilage: [], gemuese: ['Gurke', 'Tomate'], blattgruen: false, zutaten: ['Kichererbsen', 'Gurke', 'Tomate'] },
+      { id: 'taboule', name: 'Taboulé', eiweiss: [], beilage: ['Bulgur'], gemuese: ['Petersilie', 'Tomate', 'Gurke', 'Minze'], blattgruen: true, zutaten: ['Bulgur', 'viel Petersilie', 'Tomate', 'Gurke'] }
+    ],
+    toppings: ['Feta', 'Sprossen', 'Saaten', 'Halloumi', 'Nüsse', 'Brot']   // kein Ei: das gibt es zum Frühstück
+  };
+
+  /* ======================================================================
+     4. ZUSTAND
+     state.wochen hält einen Plan pro Woche, Schlüssel ist das Datum des
+     Montags. Die Vorwochen dienen als Gedächtnis für den Cooldown.
+     ====================================================================== */
+  // Slots einmal aus CONFIG ableiten, damit ein anderer Kochrhythmus nur dort geändert wird
+  const ABEND_SLOTS = CONFIG.kochrunden.reduce(function (a, r) { return a.concat(r.slots); }, []);
+  const MITTAG_SLOTS = CONFIG.salatrunden.map(function (r) { return r.slot; });
+
+  function findDish(list, id) {
+    for (let i = 0; i < list.length; i++) if (list[i].id === id) return list[i];
+    return null;
+  }
+
+  function defaultState() {
+    return { v: CONFIG.schemaVersion, wochen: {}, favoriten: [] };
+  }
+
+  // Ein Plan ist nur gültig, wenn jeder Slot auf ein vorhandenes Gericht zeigt.
+  // So überlebt das Tool auch gestrichene Gerichte: der Plan wird neu gebaut.
+  function isValidPlan(p) {
+    if (!p || typeof p !== 'object') return false;
+    if (!p.abend || !p.mittag || typeof p.seed !== 'number') return false;
+    if (!p.locks || typeof p.locks !== 'object' || !p.getauscht || typeof p.getauscht !== 'object') return false;
+    return ABEND_SLOTS.every(function (s) { return findDish(DATEN.abend, p.abend[s]); }) &&
+           MITTAG_SLOTS.every(function (s) { return findDish(DATEN.mittag, p.mittag[s]); });
+  }
+
+  // Liest gespeicherte Daten und wirft nur einzelne kaputte Wochen weg, nicht alles
+  function sanitize(s) {
+    if (!s || typeof s !== 'object' || s.v !== CONFIG.schemaVersion) return defaultState();
+    if (!s.wochen || typeof s.wochen !== 'object' || Array.isArray(s.wochen)) return defaultState();
+    const clean = defaultState();
+    Object.keys(s.wochen).forEach(function (k) {
+      if (/^\d{4}-\d{2}-\d{2}$/.test(k) && isValidPlan(s.wochen[k])) clean.wochen[k] = s.wochen[k];
+    });
+    // Nur Favoriten behalten, deren Gericht es noch gibt
+    if (Array.isArray(s.favoriten)) {
+      clean.favoriten = uniq(s.favoriten.filter(function (id) {
+        return typeof id === 'string' && (findDish(DATEN.abend, id) || findDish(DATEN.mittag, id));
+      }));
+    }
+    return clean;
+  }
+
+  function migrate(s) {
+    if (!s || typeof s !== 'object' || typeof s.v !== 'number') return null;
+    if (s.v > CONFIG.schemaVersion) return null;
+    // Stand 1 kannte noch keine Favoriten: Feld ergänzen, Wochen bleiben erhalten
+    if (s.v === 1) { s.favoriten = []; s.v = 2; }
+    return s;
+  }
+
+  function clone(obj) { return JSON.parse(JSON.stringify(obj)); }
+
+  const storage = {
+    available: (function () {
+      try {
+        const k = '__wpl_test__';
+        window.localStorage.setItem(k, k);
+        window.localStorage.removeItem(k);
+        return true;
+      } catch (e) { return false; }
+    })(),
+    load: function () {
+      if (!this.available) return defaultState();
+      try {
+        const raw = window.localStorage.getItem(CONFIG.storageKey);
+        if (!raw) return defaultState();
+        return sanitize(migrate(JSON.parse(raw)));
+      } catch (e) {
+        return defaultState();
+      }
+    },
+    save: function (s) {
+      if (!this.available) return;
+      try { window.localStorage.setItem(CONFIG.storageKey, JSON.stringify(s)); }
+      catch (e) { /* Speicher voll: Tool läuft trotzdem */ }
+    }
+  };
+
+  /* ======================================================================
+     5. LOGIK
+     Reine Funktionen ohne Zugriff auf die Seite.
+     ====================================================================== */
+
+  // --- Datum ---------------------------------------------------------------
+  // Wochentag ab Montag: 0 = Mo ... 6 = So (JavaScript zählt ab Sonntag)
+  function wochentag(d) { return (d.getDay() + 6) % 7; }
+
+  function addDays(d, n) { return new Date(d.getFullYear(), d.getMonth(), d.getDate() + n); }
+
+  function dateKey(d) {
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+
+  function keyToDate(k) {
+    const p = k.split('-').map(Number);
+    return new Date(p[0], p[1] - 1, p[2]);
+  }
+
+  // Welche Woche zeigt das Tool? Ab Samstag schon die kommende, damit der
+  // Plan am Sonntagabend für die neue Woche bereitsteht.
+  function zielMontag(heute, abTag) {
+    const montag = addDays(heute, -wochentag(heute));
+    return wochentag(heute) >= abTag ? addDays(montag, 7) : montag;
+  }
+
+  // Abstand in Wochen. Über UTC gerechnet, damit die Zeitumstellung nicht stört.
+  function wochenAbstand(kNeu, kAlt) {
+    const a = kNeu.split('-').map(Number), b = kAlt.split('-').map(Number);
+    return Math.round((Date.UTC(a[0], a[1] - 1, a[2]) - Date.UTC(b[0], b[1] - 1, b[2])) / (7 * 864e5));
+  }
+
+  // --- Plan lesen -----------------------------------------------------------
+  function planIds(plan) {
+    return ABEND_SLOTS.map(function (s) { return plan.abend[s]; })
+      .concat(MITTAG_SLOTS.map(function (s) { return plan.mittag[s]; }));
+  }
+
+  // Liefert pro Slot das Gericht-Objekt
+  function resolve(plan) {
+    const r = {};
+    ABEND_SLOTS.forEach(function (s) { r[s] = findDish(DATEN.abend, plan.abend[s]); });
+    MITTAG_SLOTS.forEach(function (s) { r[s] = findDish(DATEN.mittag, plan.mittag[s]); });
+    return r;
+  }
+
+  // Die Paare, in denen Kontrast gewünscht ist: jede Kochrunde und die beiden Salate
+  function paare() {
+    return CONFIG.kochrunden.map(function (r) { return r.slots; }).concat([MITTAG_SLOTS]);
+  }
+
+  function gruppe(quelle) { return CONFIG.eiweissGruppen[quelle] || quelle; }
+
+  function uniq(arr) { return arr.filter(function (x, i) { return arr.indexOf(x) === i; }); }
+
+  function familieIn(liste, id) {
+    const d = findDish(liste, id);
+    return d && d.familie ? d.familie : null;
+  }
+
+  // Manche Gerichte gehören nur auf bestimmte Plätze, z. B. Käseabend auf Samstag
+  function passtAufSlot(x, slot) { return !x.nurSlots || x.nurSlots.indexOf(slot) !== -1; }
+
+  // Abendgerichte der direkten Vorwoche: diese sind diese Woche tabu
+  function verbotenFuer(hist) {
+    if (!CONFIG.vorwocheAusschliessen) return [];
+    return [].concat.apply([], hist.filter(function (h) { return h.abstand === 1; }).map(function (h) { return h.ids; }))
+      .filter(function (id) { return findDish(DATEN.abend, id); });
+  }
+
+  // Gedächtnis: welche Gerichte in den Wochen vor der Zielwoche dran waren
+  function historie(wochen, zielKey) {
+    return Object.keys(wochen)
+      .filter(function (k) { return k < zielKey; })
+      .map(function (k) { return { abstand: wochenAbstand(zielKey, k), ids: planIds(wochen[k]) }; })
+      .filter(function (h) { return h.abstand >= 1; });
+  }
+
+  function zuletztVor(hist, id) {
+    let min = Infinity;
+    hist.forEach(function (h) { if (h.ids.indexOf(id) !== -1 && h.abstand < min) min = h.abstand; });
+    return min;
+  }
+
+  // --- Bewertung ------------------------------------------------------------
+  // Gibt Punkte und die Kennzahlen zurück. Die Kennzahlen nutzt auch der
+  // Wochen-Check, damit Anzeige und Auswahl nach denselben Regeln laufen.
+  function bewerte(plan, hist, vorher, favs) {
+    const g = CONFIG.gewichte;
+    favs = favs || [];
+    const d = resolve(plan);
+    const abend = ABEND_SLOTS.map(function (s) { return d[s]; });
+    // Bestelltes zählt nicht zur Vielfalt, sonst würde Pizza die Bilanz schönrechnen
+    const alle = abend.concat(MITTAG_SLOTS.map(function (s) { return d[s]; })).filter(function (x) { return !x.zaehltNicht; });
+
+    const quellen = uniq([].concat.apply([], alle.map(function (x) { return x.eiweiss; })));
+    const gruppen = uniq(quellen.map(gruppe));
+    const beilagen = uniq([].concat.apply([], alle.map(function (x) { return x.beilage; })));
+    const pflanzen = uniq([].concat.apply([], alle.map(function (x) { return x.gemuese; })));
+    const kuechen = uniq(abend.filter(function (x) { return !x.zaehltNicht && x.kueche; }).map(function (x) { return x.kueche; }));
+
+    let punkte = gruppen.length * g.eiweissGruppe + quellen.length * g.eiweissQuelle +
+                 beilagen.length * g.beilage + pflanzen.length * g.pflanze + kuechen.length * g.kueche;
+
+    // Kontrast innerhalb eines Paares: wer zwei Abende im Wechsel isst, soll Unterschied schmecken
+    paare().forEach(function (paar) {
+      for (let i = 0; i < paar.length; i++) {
+        for (let j = i + 1; j < paar.length; j++) {
+          const a = d[paar[i]], b = d[paar[j]];
+          if (a.eiweiss[0] && b.eiweiss[0] && gruppe(a.eiweiss[0]) === gruppe(b.eiweiss[0])) punkte -= g.paarGleichesEiweiss;
+          if (a.kueche && a.kueche === b.kueche) punkte -= g.paarGleicheKueche;
+          if (a.beilage.some(function (x) { return b.beilage.indexOf(x) !== -1; })) punkte -= g.paarGleicheBeilage;
+        }
+      }
+    });
+
+    CONFIG.genussSlots.forEach(function (s) { if (d[s] && d[s].genuss) punkte += g.genuss; });
+
+    // Gerichte mit schwer erhältlichen Zutaten seltener einplanen
+    alle.forEach(function (x) {
+      x.gemuese.forEach(function (z) { if (CONFIG.selteneZutaten[z]) punkte -= CONFIG.selteneZutaten[z]; });
+    });
+
+    const tomate = abend.filter(function (x) { return x.tomatensauce; }).length;
+    if (tomate > CONFIG.maxTomatensauce) punkte -= (tomate - CONFIG.maxTomatensauce) * g.tomateZuViel;
+
+    // Blattgrün pro Tag zählen: Mittag und Abend aus den Mustern
+    const gruenTage = [];
+    for (let tag = 0; tag < 7; tag++) {
+      let n = 0;
+      const m = CONFIG.mittagMuster[tag], a = CONFIG.abendMuster[tag];
+      if (m && d[m] && d[m].blattgruen) n++;
+      if (a && d[a] && d[a].blattgruen) n++;
+      if (n > 0) gruenTage.push(tag);
+      if (CONFIG.blattgruenVerteilen && n > 1) punkte -= g.blattgruenGleicherTag;
+    }
+
+    // Gleiche Familie wie letzte Woche: erlaubt, aber teuer. Ein hartes Verbot
+    // ließe bei vier Familien zu wenig Gerichte übrig.
+    const famVorwoche = verbotenFuer(hist).map(function (id) { return familieIn(DATEN.abend, id); }).filter(Boolean);
+    abend.forEach(function (x) { if (x.familie && famVorwoche.indexOf(x.familie) !== -1) punkte -= g.familieVorwoche; });
+
+    planIds(plan).forEach(function (id) {
+      const vor = zuletztVor(hist, id);
+      if (vor <= CONFIG.cooldownStrafe.length) punkte -= CONFIG.cooldownStrafe[vor - 1];
+      if (vorher && vorher.indexOf(id) !== -1) punkte -= CONFIG.strafeVorherigerWurf;
+      if (favs.indexOf(id) !== -1) punkte += g.favorit;
+    });
+
+    return {
+      punkte: punkte,
+      quellen: quellen, gruppen: gruppen, beilagen: beilagen, pflanzen: pflanzen, kuechen: kuechen,
+      tomate: tomate, gruenTage: gruenTage
+    };
+  }
+
+  // Zufälliges Element aus einer Liste
+  function pick(list, rand) { return list[Math.floor(rand() * list.length)]; }
+
+  // Wählt zufällig unter allen Kandidaten nahe am besten Ergebnis.
+  // Warum nicht einfach den besten: sonst käme bei jedem Würfeln dieselbe Woche.
+  function waehleNaheBestem(kandidaten, rand) {
+    let best = -Infinity;
+    kandidaten.forEach(function (k) { if (k.punkte > best) best = k.punkte; });
+    return pick(kandidaten.filter(function (k) { return k.punkte >= best - CONFIG.spielraum; }), rand);
+  }
+
+  // Füllt alle freien Slots eines Typs mit zufälligen, verschiedenen Gerichten.
+  // Harte Regeln wirken hier, damit sie nie verletzt werden. Die Stufen danach
+  // greifen nur, wenn es sonst kein Gericht mehr gäbe.
+  function fuelle(slots, liste, fest, locks, verboten, rand) {
+    const out = {};
+    const belegt = [];
+    slots.forEach(function (s) { if (locks[s] && fest && fest[s]) { out[s] = fest[s]; belegt.push(fest[s]); } });
+    slots.forEach(function (s) {
+      if (out[s]) return;
+      const fams = belegt.map(function (id) { return familieIn(liste, id); }).filter(Boolean);
+      const frei = function (x) { return belegt.indexOf(x.id) === -1; };
+      const erlaubt = function (x) { return verboten.indexOf(x.id) === -1; };
+      const neueFamilie = function (x) { return !CONFIG.eineProFamilie || !x.familie || fams.indexOf(x.familie) === -1; };
+      const platz = function (x) { return passtAufSlot(x, s); };
+      const stufen = [
+        function (x) { return platz(x) && frei(x) && erlaubt(x) && neueFamilie(x); },
+        function (x) { return platz(x) && frei(x) && erlaubt(x); },
+        function (x) { return platz(x) && frei(x); },
+        platz
+      ];
+      let pool = [];
+      for (let i = 0; i < stufen.length && !pool.length; i++) pool = liste.filter(stufen[i]);
+      const wahl = pick(pool, rand).id;
+      out[s] = wahl;
+      belegt.push(wahl);
+    });
+    return out;
+  }
+
+  // Baut eine Woche. Gesperrte Slots aus dem alten Plan bleiben stehen.
+  function erzeugePlan(alt, hist, rand, favs) {
+    const locks = alt ? clone(alt.locks) : {};
+    const vorher = alt ? planIds(alt).filter(function (id, i) {
+      const slot = ABEND_SLOTS.concat(MITTAG_SLOTS)[i];
+      return !locks[slot];
+    }) : null;
+    const verboten = verbotenFuer(hist);
+    const kandidaten = [];
+    for (let i = 0; i < CONFIG.versuche; i++) {
+      const plan = {
+        abend: fuelle(ABEND_SLOTS, DATEN.abend, alt && alt.abend, locks, verboten, rand),
+        mittag: fuelle(MITTAG_SLOTS, DATEN.mittag, alt && alt.mittag, locks, [], rand),
+        locks: locks,
+        getauscht: {},
+        seed: Math.floor(rand() * 1000)
+      };
+      plan.punkte = bewerte(plan, hist, vorher, favs).punkte;
+      kandidaten.push(plan);
+    }
+    const wahl = waehleNaheBestem(kandidaten, rand);
+    delete wahl.punkte;
+    return wahl;
+  }
+
+  function istMittag(slot) { return MITTAG_SLOTS.indexOf(slot) !== -1; }
+
+  // Tauscht ein Gericht gegen das passendste andere. Bereits weggetauschte
+  // kommen erst wieder, wenn alle durch sind.
+  function tausche(plan, slot, hist, rand, favs) {
+    const neu = clone(plan);
+    const mittag = istMittag(slot);
+    const feld = mittag ? 'mittag' : 'abend';
+    const liste = DATEN[feld];
+    const aktuell = neu[feld][slot];
+    const imPlan = planIds(neu);
+    const verboten = mittag ? [] : verbotenFuer(hist);
+    const andereFam = mittag ? [] : ABEND_SLOTS.filter(function (s) { return s !== slot; })
+      .map(function (s) { return familieIn(liste, neu.abend[s]); }).filter(Boolean);
+    const passt = function (x, gesehen, streng) {
+      if (!passtAufSlot(x, slot) || imPlan.indexOf(x.id) !== -1 || gesehen.indexOf(x.id) !== -1) return false;
+      if (!streng) return true;
+      return verboten.indexOf(x.id) === -1 &&
+        !(CONFIG.eineProFamilie && x.familie && andereFam.indexOf(x.familie) !== -1);
+    };
+    // Erst streng mit Gedächtnis, dann streng von vorn, erst zuletzt ohne harte Regeln
+    const bisher = (neu.getauscht[slot] || []).concat(aktuell);
+    const versuche = [[bisher, true], [[aktuell], true], [bisher, false], [[aktuell], false]];
+    let pool = [], gesehen = bisher;
+    for (let i = 0; i < versuche.length && !pool.length; i++) {
+      gesehen = versuche[i][0];
+      pool = liste.filter(function (x) { return passt(x, versuche[i][0], versuche[i][1]); });
+    }
+    if (!pool.length) return null;   // es gibt schlicht kein anderes Gericht
+    const kandidaten = pool.map(function (x) {
+      const p = clone(neu);
+      p[feld][slot] = x.id;
+      return { id: x.id, punkte: bewerte(p, hist, null, favs).punkte };
+    });
+    neu[feld][slot] = waehleNaheBestem(kandidaten, rand).id;
+    neu.getauscht[slot] = gesehen;
+    return neu;
+  }
+
+  // --- Erklärungen ----------------------------------------------------------
+  // Begründet in ein bis drei kurzen Sätzen, warum ein Gericht in dieser Woche steht
+  function begruendung(plan, slot, hist, favs) {
+    const d = resolve(plan);
+    const g = d[slot];
+    const andere = Object.keys(d).filter(function (s) { return s !== slot; }).map(function (s) { return d[s]; });
+    const sammle = function (feld) { return [].concat.apply([], andere.map(function (x) { return x[feld]; })); };
+    const saetze = [];
+
+    if (plan.locks[slot]) saetze.push(t('rLocked'));
+    if (favs && favs.indexOf(g.id) !== -1) saetze.push(t('rFav'));
+    if (g.genuss && CONFIG.genussSlots.indexOf(slot) !== -1) saetze.push(t('rGenuss'));
+
+    const neuDrin = g.eiweiss.concat(g.beilage).filter(function (x) {
+      return sammle('eiweiss').concat(sammle('beilage')).indexOf(x) === -1;
+    }).slice(0, 3);
+    if (neuDrin.length) {
+      saetze.push(t('rNew', { list: neuDrin.join(', ') }));
+    } else {
+      const pfl = g.gemuese.filter(function (x) { return sammle('gemuese').indexOf(x) === -1; }).slice(0, 3);
+      if (pfl.length) saetze.push(t('rPlants', { list: pfl.join(', ') }));
+    }
+
+    const paar = paare().filter(function (p) { return p.indexOf(slot) !== -1; })[0] || [];
+    const partnerSlot = paar.filter(function (s) { return s !== slot; })[0];
+    if (partnerSlot) {
+      const p = d[partnerSlot];
+      const label = istMittag(partnerSlot) ? p.name : partnerSlot;
+      if (g.kueche && p.kueche && g.kueche !== p.kueche) {
+        saetze.push(t('rContrastKitchen', { slot: label, a: g.kueche, b: p.kueche }));
+      } else if (g.eiweiss[0] && p.eiweiss[0] && gruppe(g.eiweiss[0]) !== gruppe(p.eiweiss[0])) {
+        saetze.push(t('rContrastProtein', { slot: label, a: g.eiweiss[0], b: p.eiweiss[0] }));
+      }
+    }
+
+    if (hist.length) {
+      const vor = zuletztVor(hist, g.id);
+      if (vor === 1) saetze.push(t('rAgo1'));
+      else if (vor !== Infinity) saetze.push(t('rAgo', { n: vor }));
+      else saetze.push(t('rLong'));
+    }
+    return saetze.join(' ');
+  }
+
+  // Wie viele Portionen bleiben übrig, wenn ein Gericht seltener auf dem Plan steht?
+  function restPortionen(slot) {
+    const abende = CONFIG.abendMuster.filter(function (s) { return s === slot; }).length;
+    return Math.max(0, CONFIG.portionenProGericht - abende * CONFIG.personen);
+  }
+
+  // Prüft, ob ein Gericht länger als erlaubt im Kühlschrank stünde.
+  // Greift nur, wenn jemand Muster oder Kochtage in CONFIG ändert.
+  function frischeWarnungen() {
+    const out = [];
+    CONFIG.kochrunden.forEach(function (r) {
+      r.slots.forEach(function (slot) {
+        CONFIG.abendMuster.forEach(function (s, tag) {
+          if (s === slot && tag - r.tag > CONFIG.maxTageNachKochen) out.push({ slot: slot, tage: tag - r.tag });
+        });
+      });
+    });
+    return out;
+  }
+
+  // Topping-Ideen rotieren mit dem Zufallswert der Woche, damit jede Woche anders beginnt
+  function toppings(seed, tag) {
+    const n = DATEN.toppings.length;
+    const out = [];
+    for (let i = 0; i < Math.min(CONFIG.toppingsProTag, n); i++) out.push(DATEN.toppings[(seed + tag * CONFIG.toppingsProTag + i) % n]);
+    return out;
+  }
+
+  /* ======================================================================
+     6. OBERFLÄCHE
+     ====================================================================== */
+  const root = document.getElementById('wpl-app');
+  if (!root) return;
+
+  let state;
+  let zielKey;
+  let undoSnapshot = null;
+  let undoTimer = null;
+
+  function esc(str) {
+    return String(str).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function ref(name) { return root.querySelector('[data-ref="' + name + '"]'); }
+
+  function datumKurz(d) { return d.getDate() + '.' + (d.getMonth() + 1) + '.'; }
+
+  function aktuellerPlan() { return state.wochen[zielKey]; }
+
+  function buildSkeleton() {
+    root.setAttribute('lang', CONFIG.lang);
+    root.innerHTML =
+      '<h1>' + esc(t('title')) + '</h1>' +
+      '<p class="wpl-sub" data-ref="range"></p>' +
+      '<div data-ref="warn"></div>' +
+      '<h2>' + esc(t('secWeek')) + '</h2>' +
+      '<div class="wpl-card" data-ref="week"></div>' +
+      '<button type="button" data-action="print">' + esc(t('print')) + '</button>' +
+      '<p class="wpl-small">' + esc(t('printHint')) + '</p>' +
+      '<h2>' + esc(t('secDishes')) + '</h2>' +
+      '<button type="button" class="wpl-primary" data-action="reroll">' + esc(t('reroll')) + '</button>' +
+      '<p class="wpl-small">' + esc(t('rerollHint')) + '</p>' +
+      '<div data-ref="dishes"></div>' +
+      '<h2>' + esc(t('secCheck')) + '</h2>' +
+      '<div class="wpl-card" data-ref="check"></div>' +
+      '<details class="wpl-all"><summary>' + esc(t('allDishes')) + '</summary><div data-ref="all"></div></details>' +
+      '<div class="wpl-print" data-ref="print" aria-hidden="true"></div>' +
+      '<div class="wpl-status" data-ref="status" role="status" aria-live="polite"></div>' +
+      (CONFIG.showDisclaimer ? '<p class="wpl-footer">' + esc(t('disclaimer')) + '</p>' : '');
+  }
+
+  function renderWeek(plan, d) {
+    const montag = keyToDate(zielKey);
+    const tage = t('days');
+    let html = '';
+    for (let tag = 0; tag < 7; tag++) {
+      const datum = addDays(montag, tag);
+      const m = CONFIG.mittagMuster[tag];
+      const a = CONFIG.abendMuster[tag];
+      const todos = [];
+      CONFIG.kochrunden.forEach(function (r) {
+        if (r.tag !== tag) return;
+        const kochen = r.slots.filter(function (s) { return !d[s].einAbend; });
+        if (kochen.length) todos.push(t('todoCook', { list: kochen.join(' und ') }));
+      });
+      CONFIG.salatrunden.forEach(function (r) {
+        if (r.tag === tag) todos.push(t('todoSalad', { n: CONFIG.mittagMuster.filter(function (s) { return s === r.slot; }).length }));
+      });
+      html +=
+        '<div class="wpl-day">' +
+          '<div class="wpl-dayname">' + esc(tage[tag]) + '<small>' + esc(datumKurz(datum)) + '</small></div>' +
+          '<div>' +
+            '<div class="wpl-meal"><span class="wpl-meal-label">' + esc(t('lunch')) + '</span><span>' +
+              (m ? esc(d[m].name) + '<div class="wpl-hint">' + esc(t('toppingIdea', { list: toppings(plan.seed, tag).join(', ') })) + '</div>' : esc(t('free'))) +
+            '</span></div>' +
+            '<div class="wpl-meal"><span class="wpl-meal-label">' + esc(t('dinner')) + '</span><span>' +
+              (a ? '<span class="wpl-badge" aria-hidden="true">' + esc(a) + '</span> ' + esc(d[a].name) : esc(t('free'))) +
+            '</span></div>' +
+            todos.map(function (x) { return '<span class="wpl-todo">' + esc(x) + '</span> '; }).join('') +
+          '</div>' +
+        '</div>';
+    }
+    ref('week').innerHTML = html;
+  }
+
+  function dishCard(plan, d, slot, hist) {
+    const istFav = state.favoriten.indexOf(d[slot].id) !== -1;
+    const g = d[slot];
+    const locked = !!plan.locks[slot];
+    const rest = istMittag(slot) || g.einAbend ? 0 : restPortionen(slot);
+    return '<div class="wpl-card">' +
+      '<div class="wpl-dish-head"><span class="wpl-badge' + (istMittag(slot) ? ' is-salad' : '') + '" aria-hidden="true">' +
+        esc(istMittag(slot) ? String(MITTAG_SLOTS.indexOf(slot) + 1) : slot) + '</span>' +
+        '<span class="wpl-dish-name">' + esc(g.name) + '</span></div>' +
+      '<p class="wpl-keys">' + esc(g.zutaten.join(', ')) + '</p>' +
+      '<p class="wpl-reason">' + esc(begruendung(plan, slot, hist, state.favoriten)) + '</p>' +
+      (rest > 0 ? '<p class="wpl-hint">' + esc(t('rest', { n: rest })) + '</p>' : '') +
+      '<div class="wpl-actions">' +
+        '<button type="button" data-action="lock" data-slot="' + esc(slot) + '" aria-pressed="' + locked + '">' +
+          esc(locked ? t('locked') : t('lock')) + '</button>' +
+        '<button type="button" data-action="swap" data-slot="' + esc(slot) + '"' + (locked ? ' disabled' : '') + '>' + esc(t('swap')) + '</button>' +
+        favButton(g.id, istFav) +
+      '</div>' +
+    '</div>';
+  }
+
+  function renderDishes(plan, d, hist) {
+    const tage = t('days');
+    let html = '';
+    CONFIG.kochrunden.forEach(function (r) {
+      html += '<h3>' + esc(t('roundCook', { tag: tage[r.tag] })) + '</h3>';
+      r.slots.forEach(function (s) { html += dishCard(plan, d, s, hist); });
+    });
+    CONFIG.salatrunden.forEach(function (r) {
+      html += '<h3>' + esc(t('roundSalad', { tag: tage[r.tag] })) + '</h3>';
+      html += dishCard(plan, d, r.slot, hist);
+    });
+    ref('dishes').innerHTML = html;
+  }
+
+  function checkRow(ok, text, detail) {
+    return '<div class="wpl-check"><span class="wpl-check-mark' + (ok ? '' : ' is-open') + '" aria-hidden="true">' + (ok ? '✓' : '○') + '</span>' +
+      '<span>' + esc(text) + '</span>' +
+      (detail ? '<span class="wpl-check-detail">' + esc(detail) + '</span>' : '') + '</div>';
+  }
+
+  function renderCheck(plan, hist) {
+    const b = bewerte(plan, hist, null);
+    const z = CONFIG.ziele;
+    const tage = t('days');
+    const gruen = b.gruenTage.map(function (i) { return tage[i]; });
+    ref('check').innerHTML =
+      checkRow(b.gruppen.length >= z.eiweissGruppen, t('cProtein', { n: b.gruppen.length }), b.quellen.join(', ')) +
+      checkRow(b.beilagen.length >= z.beilagen, t('cSides', { n: b.beilagen.length }), b.beilagen.join(', ')) +
+      checkRow(b.pflanzen.length >= z.pflanzen, t('cPlants', { n: b.pflanzen.length }), b.pflanzen.join(', ')) +
+      checkRow(b.kuechen.length >= z.kuechen, t('cKitchen', { n: b.kuechen.length }), b.kuechen.join(', ')) +
+      checkRow(b.tomate <= CONFIG.maxTomatensauce, t('cTomato', { n: b.tomate, max: CONFIG.maxTomatensauce }), '') +
+      (CONFIG.blattgruenVerteilen
+        ? checkRow(true, gruen.length ? t('cGreen', { list: gruen.join(', ') }) : t('cGreenNone'), t('cGreenSpread'))
+        : '');
+  }
+
+  function favButton(id, aktiv) {
+    return '<button type="button" data-action="fav" data-id="' + esc(id) + '" aria-pressed="' + aktiv + '">' +
+      esc(aktiv ? t('favOn') : t('fav')) + '</button>';
+  }
+
+  // Liste aller Gerichte, damit auch Gerichte außerhalb des Plans Favorit werden können
+  function renderAll() {
+    const zeile = function (x) {
+      return '<div class="wpl-row"><span>' + esc(x.name) + '</span>' + favButton(x.id, state.favoriten.indexOf(x.id) !== -1) + '</div>';
+    };
+    ref('all').innerHTML =
+      '<h3>' + esc(t('allDinner')) + '</h3>' + DATEN.abend.map(zeile).join('') +
+      '<h3>' + esc(t('allLunch')) + '</h3>' + DATEN.mittag.map(zeile).join('');
+  }
+
+  // Druckansicht: liegt unsichtbar bereit, nur @media print zeigt sie.
+  // Eigener schlichter Aufbau statt der Bildschirmkarten, damit alles auf eine Seite passt.
+  function renderPrint(plan, d, hist) {
+    const montag = keyToDate(zielKey);
+    const tage = t('days');
+    let rows = '';
+    for (let tag = 0; tag < 7; tag++) {
+      const m = CONFIG.mittagMuster[tag], a = CONFIG.abendMuster[tag];
+      const todos = [];
+      CONFIG.kochrunden.forEach(function (r) {
+        if (r.tag !== tag) return;
+        const kochen = r.slots.filter(function (s) { return !d[s].einAbend; });
+        if (kochen.length) todos.push(t('todoCook', { list: kochen.join(' und ') }));
+      });
+      CONFIG.salatrunden.forEach(function (r) {
+        if (r.tag === tag) todos.push(t('todoSalad', { n: CONFIG.mittagMuster.filter(function (s) { return s === r.slot; }).length }));
+      });
+      rows += '<tr><td><strong>' + esc(tage[tag]) + '</strong> ' + esc(datumKurz(addDays(montag, tag))) + '</td>' +
+        '<td>' + (m ? esc(d[m].name) + '<br><small>' + esc(t('toppingIdea', { list: toppings(plan.seed, tag).join(', ') })) + '</small>' : esc(t('free'))) + '</td>' +
+        '<td>' + (a ? '<strong>' + esc(a) + '</strong> ' + esc(d[a].name) : esc(t('free'))) + '</td>' +
+        '<td>' + esc(todos.join(', ')) + '</td></tr>';
+    }
+    const gerichte = ABEND_SLOTS.map(function (s) {
+      const rest = d[s].einAbend ? 0 : restPortionen(s);
+      return '<li><strong>' + esc(s) + '</strong> ' + esc(d[s].name) + ': ' + esc(d[s].zutaten.join(', ')) +
+        (rest > 0 ? ' <small>(' + esc(t('rest', { n: rest })) + ')</small>' : '') + '</li>';
+    }).concat(MITTAG_SLOTS.map(function (s, i) {
+      return '<li><strong>' + esc(t('salad', { n: i + 1 })) + '</strong> ' + esc(d[s].name) + ': ' + esc(d[s].zutaten.join(', ')) + '</li>';
+    })).join('');
+    const b = bewerte(plan, hist, null);
+    ref('print').innerHTML =
+      '<h1>' + esc(t('title')) + '</h1>' +
+      '<p class="wpl-sub">' + esc(t('weekRange', { von: datumKurz(montag), bis: datumKurz(addDays(montag, 6)) })) + '</p>' +
+      '<table class="wpl-ptable"><thead><tr><th>' + esc(t('pDay')) + '</th><th>' + esc(t('lunch')) + '</th><th>' + esc(t('dinner')) + '</th><th>' + esc(t('pPrep')) + '</th></tr></thead>' +
+      '<tbody>' + rows + '</tbody></table>' +
+      '<h2>' + esc(t('pDishes')) + '</h2><ul class="wpl-plist">' + gerichte + '</ul>' +
+      '<p>' + esc(t('pVariety', { g: b.gruppen.length, b: b.beilagen.length, p: b.pflanzen.length, k: b.kuechen.length })) + '</p>' +
+      (CONFIG.showDisclaimer ? '<p class="wpl-footer">' + esc(t('disclaimer')) + '</p>' : '');
+  }
+
+  function renderWarnings() {
+    const d = resolve(aktuellerPlan());
+    const w = frischeWarnungen();
+    ref('warn').innerHTML = w.map(function (x) {
+      return '<p class="wpl-warn">' + esc(t('freshWarn', { name: d[x.slot].name, n: x.tage })) + '</p>';
+    }).join('');
+  }
+
+  function render() {
+    const plan = aktuellerPlan();
+    const d = resolve(plan);
+    const hist = historie(state.wochen, zielKey);
+    const montag = keyToDate(zielKey);
+    ref('range').textContent = t('weekRange', { von: datumKurz(montag), bis: datumKurz(addDays(montag, 6)) });
+    renderWarnings();
+    renderWeek(plan, d);
+    renderDishes(plan, d, hist);
+    renderCheck(plan, hist);
+    renderAll();
+    renderPrint(plan, d, hist);
+  }
+
+  function showStatus(message, opts) {
+    opts = opts || {};
+    const box = ref('status');
+    clearTimeout(undoTimer);
+    box.textContent = '';
+    const span = document.createElement('span');
+    span.textContent = message;
+    box.appendChild(span);
+    if (opts.undo) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.dataset.action = 'undo';
+      btn.textContent = t('undo');
+      box.appendChild(btn);
+    }
+    box.classList.add('is-visible');
+    if (!opts.sticky) {
+      undoTimer = setTimeout(function () {
+        box.classList.remove('is-visible');
+        box.textContent = '';
+        undoSnapshot = null;
+      }, CONFIG.undoSeconds * 1000);
+    }
+  }
+
+  // Jede Änderung läuft hier durch: Schnappschuss für Rückgängig, speichern, neu zeichnen
+  function commit(mutate, message) {
+    undoSnapshot = clone(state);
+    mutate();
+    storage.save(state);
+    render();
+    showStatus(message, { undo: true });
+  }
+
+  // Alte Wochen über die Historie hinaus wegräumen, damit der Speicher klein bleibt
+  function prune() {
+    const keys = Object.keys(state.wochen).sort();
+    while (keys.length > CONFIG.historieWochen + 1) delete state.wochen[keys.shift()];
+  }
+
+  function doReroll() {
+    commit(function () {
+      state.wochen[zielKey] = erzeugePlan(aktuellerPlan(), historie(state.wochen, zielKey), Math.random, state.favoriten);
+    }, t('rerolled'));
+  }
+
+  function doLock(slot) {
+    const plan = aktuellerPlan();
+    const name = resolve(plan)[slot].name;
+    const jetzt = !plan.locks[slot];
+    commit(function () { aktuellerPlan().locks[slot] = jetzt; }, t(jetzt ? 'lockedMsg' : 'unlockedMsg', { name: name }));
+  }
+
+  function doSwap(slot) {
+    const plan = aktuellerPlan();
+    if (plan.locks[slot]) return;
+    const neu = tausche(plan, slot, historie(state.wochen, zielKey), Math.random, state.favoriten);
+    if (!neu) return;
+    const alt = resolve(plan)[slot].name;
+    commit(function () { state.wochen[zielKey] = neu; }, t('swapped', { alt: alt, neu: resolve(neu)[slot].name }));
+  }
+
+  // Favorit an- oder abwählen. Der Plan bleibt, wirkt erst beim nächsten Würfeln oder Tauschen.
+  function doFav(id) {
+    const d = findDish(DATEN.abend, id) || findDish(DATEN.mittag, id);
+    if (!d) return;
+    const aktiv = state.favoriten.indexOf(id) !== -1;
+    commit(function () {
+      state.favoriten = aktiv ? state.favoriten.filter(function (x) { return x !== id; }) : state.favoriten.concat(id);
+    }, t(aktiv ? 'favMsgOff' : 'favMsgOn', { name: d.name }));
+  }
+
+  function doUndo() {
+    if (!undoSnapshot) return;
+    state = undoSnapshot;
+    undoSnapshot = null;
+    storage.save(state);
+    render();
+    showStatus(t('undone'));
+  }
+
+  function onClick(e) {
+    const btn = e.target.closest('[data-action]');
+    if (!btn || !root.contains(btn) || btn.disabled) return;
+    const slot = btn.dataset.slot;
+    switch (btn.dataset.action) {
+      case 'reroll': doReroll(); break;
+      case 'lock':   doLock(slot); break;
+      case 'swap':   doSwap(slot); break;
+      case 'undo':   doUndo(); break;
+      case 'fav':    doFav(btn.dataset.id); break;
+      case 'print':  window.print(); break;
+    }
+  }
+
+  function init() {
+    try {
+      state = storage.load();
+      zielKey = dateKey(zielMontag(new Date(), CONFIG.naechsteWocheAbTag));
+      // Sofort startklar: Gibt es für diese Woche noch keinen Plan, wird einer gebaut
+      if (!state.wochen[zielKey]) {
+        state.wochen[zielKey] = erzeugePlan(null, historie(state.wochen, zielKey), Math.random, state.favoriten);
+        prune();
+        storage.save(state);
+      }
+      buildSkeleton();
+      root.addEventListener('click', onClick);
+      render();
+      if (!storage.available) showStatus(t('storageOff'), { sticky: true });
+    } catch (err) {
+      console.error(err);
+      root.textContent = t('fatal');
+    }
+  }
+
+  // Nur für automatische Tests: macht die reinen Funktionen von außen prüfbar
+  if (window.__WPL_TEST__) {
+    window.__WPL_TEST__.api = { CONFIG: CONFIG, DATEN: DATEN, bewerte: bewerte, erzeugePlan: erzeugePlan, tausche: tausche,
+      zielMontag: zielMontag, migrate: migrate, wochenAbstand: wochenAbstand, historie: historie, frischeWarnungen: frischeWarnungen, sanitize: sanitize };
+  }
+
+  init();
+})();
+</script>
+<!-- ==================== EINBETTEN: BIS HIER ==================== -->
+
+</body>
+</html>
